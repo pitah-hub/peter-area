@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script>
+        // Check if the user is already logged in
+        function checkLogin() {
+            const isLoggedIn = sessionStorage.getItem("loggedIn");
+            if (isLoggedIn) {
+                alert("You are already logged in.");
+                window.location.href = "index.html"; // Redirect to homepage
+            }
+        }
+
+        // Handle form submission
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Get user input
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Retrieve stored user data from local storage
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Validate user credentials
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                sessionStorage.setItem("loggedIn", true);
+                alert("Login successful!");
+                window.location.href = "index.html"; // Redirect to the homepage
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+    </script>
+</head>
+<body onload="checkLogin()">
+    <h2>Login Form</h2>
+    <form id="loginForm" onsubmit="handleLogin(event)">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Login">
+        <p>
+            <a href="#" id="forgotPassword">Forgot Password?</a>
+        </p>
+    
+        <div id="resetPasswordModal" style="display:none;">
+            <h2>Reset Password</h2>
+            <p>Please enter your email address to reset your password:</p>
+            <input type="email" id="resetEmail" required>
+            <button id="sendResetLink">Send Reset Link</button>
+            <button id="closeModal">Close</button>
+        </div>
+    
+        <script>
+            // Show the reset password modal
+            document.getElementById('forgotPassword').addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('resetPasswordModal').style.display = 'block';
+            });
+    
+            // Close the modal
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('resetPasswordModal').style.display = 'none';
+            });
+    
+            // Send reset link (this is a placeholder for actual logic)
+            document.getElementById('sendResetLink').addEventListener('click', function() {
+                const email = document.getElementById('resetEmail').value;
+                if (email) {
+                    // Here you would typically make an API call to send the reset link
+                    alert(`Reset link has been sent to ${email}.`);
+                    document.getElementById('resetPasswordModal').style.display = 'none';
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+            });  
+    </form>
+    
+</body>
+</html>

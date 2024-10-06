@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Checkout</h1>
+    <div id="paymentDetails"></div>
+    <button id="confirm-payment">Confirm Payment</button>
+
+    <script>
+        // Get the total from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const total = urlParams.get('total');
+        
+        // Display payment details
+        document.getElementById('paymentDetails').innerHTML = `
+            <p>Total Amount: Ksh ${total}</p>
+            <p>Please proceed with the payment by sending the amount to <strong>0110280346</strong> via M-Pesa.</p>
+        `;
+
+        // Handle the Confirm Payment button click
+        document.getElementById('confirm-payment').addEventListener('click', function() {
+            alert(`Please complete your payment of Ksh ${total} by sending it to 0110280346.`);
+        });
+    </script>
+</body>
+</html>
